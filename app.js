@@ -9,49 +9,7 @@ var index = require('./routes/index');
 var users = require('./routes/users');
 
 
-
-/*
-const sequelize = new Sequelize('local', 'postgres', 'postgres', {
-  host: 'localhost',
-  dialect: 'postgres',
-  pool: {
-    max: 5,
-    min: 0,
-    idle: 10000
-  }
-})
-
-
-var Sequelize = require("sequelize");
-
-const sequelize = new Sequelize('postgres://postgres:postgres@localhost:5432/postgres');
-
-const User = sequelize.define('user', {
-  firstName: {
-    type: Sequelize.STRING
-  },
-  lastName: {
-    type: Sequelize.STRING
-  }
-});
-/*
-sequelize.sync()
-  .then(() => User.create({
-    firstName: ' Vova',
-    lastName: 'Valov'
-  })
-);
-
-User.findAll().then(users => {
-  console.log(users)
-})
-
-
-
-
-*/
-
-
+var login = require('./routes/login');
 
 
 
@@ -63,8 +21,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+
 app.use('/', index);
 app.use('/users', users);
+app.use('/login', login);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -83,7 +44,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.send("404");
 });
-
 
 
 app.listen(7000, function () {
