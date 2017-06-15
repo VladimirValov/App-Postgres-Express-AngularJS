@@ -21,7 +21,7 @@ const sequelize = new Sequelize('local', 'postgres', 'postgres', {
   }
 })
 
-*/
+
 var Sequelize = require("sequelize");
 
 const sequelize = new Sequelize('postgres://postgres:postgres@localhost:5432/postgres');
@@ -41,7 +41,7 @@ sequelize.sync()
     lastName: 'Valov'
   })
 );
-*/
+
 User.findAll().then(users => {
   console.log(users)
 })
@@ -49,7 +49,7 @@ User.findAll().then(users => {
 
 
 
-
+*/
 
 
 

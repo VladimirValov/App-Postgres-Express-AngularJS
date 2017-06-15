@@ -1,12 +1,14 @@
 var express = require('express');
 var router = express.Router();
 
-const User = require('../models/users.js')
+const db = require('../models/index.js')
 /* GET users listing. */
+
+console.log(db.user);
 
 let allUsers = "";
 
-User.findAll().then(users => {
+db.user.findAll().then(users => {
   allUsers = users;
   console.log(users)
 })

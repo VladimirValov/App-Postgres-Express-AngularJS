@@ -2,6 +2,8 @@
 Admin page for users game statistic
 
 
+Sequelize Migration
+
 # npm install --save sequelize-cli
 
 # sequelize init  # Initializes the project.
@@ -10,6 +12,6 @@ Admin page for users game statistic
 
 # sequelize db:migrate        # Run pending migrations.
 
-sequelize seed:create
+# sequelize seed:create
 
-$ sequelize db:seed:all
+# sequelize db:seed:all
