@@ -16,16 +16,41 @@ gulp.task('clean', function() {
 })
 
 gulp.task('html', function() {
-  return gulp.src('source/**/*.html' /*, {since : gulp.lastRun('html')}*/)
-
+  return gulp.src('source/**/*.html')
   .pipe(newer('public')) //Только обновленные файлы
-
   .pipe(debug({title: 'src'}))
   .pipe(gulp.dest('public'));
 })
 
+gulp.task('js', function() {
+  return gulp.src([
+    '!source/libs/*.js',
+    '!source/bower_components/**/*.js',
+    'source/**/*.module.js',
+    'source/**/*.js'
+  ])
+  .pipe(babel())
+  .pipe(debug({title: 'babel'}))
+  .pipe(concat("script.js"))
+//  .pipe(debug({title: 'concat'}))
+//  .pipe(uglify(/*{ mangle: false }*/))
+//  .pipe(debug({title: 'uglify'}))
+  .pipe(gulp.dest('public/js'));
+})
 
-gulp.task('build', ['html'], function() {
 
+gulp.task('lib', function() {
+  return gulp.src([
+    'source/bower_components/angular/angular.js'
+  ])
+  .pipe(newer('public/lib')) //Только обновленные файлы
+  .pipe(debug({title: 'src'}))
+  .pipe(gulp.dest('public/lib'));
+})
+
+
+gulp.task('build', ['lib', 'html', 'js'], function() {
   gulp.watch('source/**/*.html', ['html']);
+  gulp.watch('source/lib/*.js', ['lib']);
+  gulp.watch('source/**/*.js', ['js']);
 });
