@@ -1,0 +1,29 @@
+{
+  "name": "gamesstatistics",
+  "version": "1.0.0",
+  "description": "Admin page for users game statistic",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/VladimirValov/Postgres-Express-Angular.git"
+  },
+  "author": "valov-web",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/VladimirValov/Postgres-Express-Angular/issues"
+  },
+  "homepage": "https://github.com/VladimirValov/Postgres-Express-Angular#readme",
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "gulp": "^3.9.1",
+    "morgan": "^1.8.2",
+    "pg": "^6.2.4",
+    "pg-hstore": "^2.3.2",
+    "sequelize": "^4.1.0",
+    "sequelize-cli": "^2.7.0"
+  }
+}
