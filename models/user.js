@@ -4,7 +4,7 @@ module.exports = function(sequelize, DataTypes) {
     name: DataTypes.STRING,
     email: DataTypes.STRING,
     password: DataTypes.STRING,
-    admin: DataTypes.BOOLEAN
+    isAdmin: DataTypes.BOOLEAN
   }, {
     classMethods: {
       associate: function(models) {

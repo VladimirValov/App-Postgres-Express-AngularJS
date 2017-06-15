@@ -1,3 +1,5 @@
-angular.module('gameApp',[
-  'components'
+angular.module('gameApp', [
+  'core',
+  'components',
+  'ui.router'
 ]);

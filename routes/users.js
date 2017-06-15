@@ -8,12 +8,14 @@ console.log(db.user);
 
 let allUsers = "";
 
-db.user.findAll().then(users => {
-  allUsers = users;
-  console.log(users)
-})
+
 
 router.get('/', function(req, res, next) {
+  db.user.findAll().then(users => {
+    allUsers = users;
+    console.log(users)
+  })
+
   res.send(allUsers);
 });
 

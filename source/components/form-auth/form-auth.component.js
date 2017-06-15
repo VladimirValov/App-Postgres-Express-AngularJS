@@ -6,24 +6,45 @@ angular.module('formAuth').component('formAuth', {
 
 function FormAuthController($http, Auth, $state) {
 
-  this.authError;
+  var self = this;
+
 
   this.login = function(user) {
-    console.log('Auth.getUser()');
-    console.log(Auth.getUser());
+    console.log('Auth.getToken()');
+    console.log(Auth.getToken());
+  //  console.log('this.authError', this.authError);
 
-    console.log(user);
+    console.log('Данные пользователя: ', user);
+
+  //  self.authError = "Ожидание данных от сервера";
 
     $http.post('/login', user).then(function(response) {
-      console.log(response.data);
 
-      if(response.data.id) {
-        Auth.setUser(response.data);
-        $state.go('home');
+      let user = response.data
+
+      self.authError = user;
+      console.log('response');
+      console.log(response);
+
+      console.log(user.token);
+
+      if(user.token) {
+        Auth.setUser(user.name, user.isAdmin, user.token);
       }
+
+      if(user.isAdmin == true) {
+        return $state.go('lk-admin');
+      }
+
+      if(user.isAdmin == false) {
+    //    Auth.setUser(response.data);
+        return $state.go('lk-user');
+      }
+
     }).catch(err => {
-      console.log(err.data);
-      this.authError = err.data;
+      console.log('err.data');
+     console.log(err);
+      self.authError = err.data;
     })
   }
 }

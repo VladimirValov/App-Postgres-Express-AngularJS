@@ -6,7 +6,7 @@
 
   <link rel='stylesheet' href='css/style.css' />
 
-  <script src="lib/angular.js" charset="utf-8"></script>
+<!--  <script src="lib/angular.js" charset="utf-8"></script> -->
 
   <script src="lib/lib.js" charset="utf-8"></script>
   <script src="js/script.js" charset="utf-8"></script>
@@ -14,12 +14,19 @@
   <title> Angular </title>
 </head>
 <body>
-  Test Angular
   <hr>
   <div class="container-fluid">
     <ui-view></ui-view>
-    <form-auth></form-auth>
   </div>
   <hr>
+  <p>index.html</p>
+  <hr>
+  <div class="container-fluid">
+    Cостояния:
+    <a ui-sref="login">Авторизация</a>  |
+    <a ui-sref="lk-admin">Админка</a> |
+    <a ui-sref="lk-user">Страница пользователя</a> |
+    <a ui-sref="logout">Выход</a>
+  </div>
 </body>
 </html>

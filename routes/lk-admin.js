@@ -2,31 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const crypto = require('crypto');
-
-const secret = require('../config/config')['secret'];
+const secret = "qwerty1223456";
 
 const db = require('../models/index.js')
 /* GET users listing. */
-
-
-
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-
-
-var jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'jwtSecret';
-
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
-});
-
-
-
 
 console.log(db.user);
 
@@ -55,14 +34,12 @@ router.post('/', function(req, res) {
     attributes: [
       'name',
       'email',
-      'isAdmin',
+      'admin',
       'password'
     ]
   }).then(user => {
   //  allUsers = users;
-   console.log(user.name);
-   console.log(user.isAdmin);
-   console.log(user.email);
+//   console.log(users);
 
    if (!user){
      return res.send("Пользователь в базе не найден");
@@ -72,14 +49,14 @@ router.post('/', function(req, res) {
      return res.send("Не верный пароль!");
    }
 
-    const payload = {name: user.name}
-    var token = jwt.sign(payload, jwtOptions.secretOrKey);
+   if(user.admin) {
+     return res.send("Вы админ");
+   }
+   else {
+     return res.send("Обычный пользователь");
+   }
 
-    return res.send({
-      name: user.name,
-      isAdmin: user.isAdmin,
-      token: token
-    });
+
 
   })
 

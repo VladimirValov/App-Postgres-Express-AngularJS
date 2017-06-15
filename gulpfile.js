@@ -22,6 +22,19 @@ gulp.task('html', function() {
   .pipe(gulp.dest('public'));
 })
 
+gulp.task('css', function() {
+  return gulp.src([
+    'source/css/*.css',
+    'source/bower_components/angular-bootstrap/ui-bootstrap-csp.css'
+    ])
+    .pipe(sourcemaps.init())
+    .pipe(debug({title: 'src'}))
+    .pipe(concat("style.css"))
+    .pipe(debug({title: 'concat'}))
+    .pipe(sourcemaps.write('.'))
+    .pipe(gulp.dest('public/css'));
+})
+
 gulp.task('js', function() {
   return gulp.src([
     '!source/libs/*.js',
@@ -29,6 +42,7 @@ gulp.task('js', function() {
     'source/**/*.module.js',
     'source/**/*.js'
   ])
+  .pipe(debug({title: 'src'}))
   .pipe(babel())
   .pipe(debug({title: 'babel'}))
   .pipe(concat("script.js"))
@@ -41,16 +55,19 @@ gulp.task('js', function() {
 
 gulp.task('lib', function() {
   return gulp.src([
-    'source/bower_components/angular/angular.js'
+    'source/bower_components/angular/angular.js',
+    'source/bower_components/angular-ui-router/release/angular-ui-router.js'
   ])
   .pipe(newer('public/lib')) //Только обновленные файлы
   .pipe(debug({title: 'src'}))
+  .pipe(concat("lib.js"))
   .pipe(gulp.dest('public/lib'));
 })
 
 
-gulp.task('build', ['lib', 'html', 'js'], function() {
+gulp.task('build', ['html', 'css', 'lib', 'js'], function() {
   gulp.watch('source/**/*.html', ['html']);
+  gulp.watch('source/css/*.css', ['css']);
   gulp.watch('source/lib/*.js', ['lib']);
   gulp.watch('source/**/*.js', ['js']);
 });

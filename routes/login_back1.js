@@ -2,14 +2,13 @@ const express = require('express');
 const router = express.Router();
 
 const crypto = require('crypto');
-
 const secret = require('../config/config')['secret'];
-
 const db = require('../models/index.js')
 /* GET users listing. */
 
+console.log(db.user);
 
-
+/*
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
 
@@ -24,11 +23,8 @@ jwtOptions.secretOrKey = 'jwtSecret';
 var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
   console.log('payload received', jwt_payload);
 });
+*/
 
-
-
-
-console.log(db.user);
 
 let allUsers = "";
 
@@ -39,8 +35,14 @@ router.get('/', function(req, res, next) {
 router.post('/', function(req, res) {
   console.log(req.body);
 
-  const email = req.body.email;
-  const password = req.body.password;
+  if(req.body.email && req.body.password) {
+    const email = req.body.email;
+    const password = req.body.password;
+  }
+  else {
+    return res.status(401).send("Введите логин и пароль");
+  }
+
 
   const hash = crypto.createHmac('sha256', secret)
                    .update(password)
@@ -53,33 +55,42 @@ router.post('/', function(req, res) {
       email: req.body.email
     },
     attributes: [
+      'id',
       'name',
       'email',
-      'isAdmin',
+      'admin',
       'password'
     ]
   }).then(user => {
   //  allUsers = users;
-   console.log(user.name);
-   console.log(user.isAdmin);
-   console.log(user.email);
+//   console.log(users);
 
    if (!user){
-     return res.send("Пользователь в базе не найден");
+     return res.status(401).send("Пользователь в базе не найден");
    }
 
    if (user.password != hash) {
-     return res.send("Не верный пароль!");
+     return res.status(401).send("Не верный пароль!");
    }
 
-    const payload = {name: user.name}
-    var token = jwt.sign(payload, jwtOptions.secretOrKey);
 
-    return res.send({
-      name: user.name,
-      isAdmin: user.isAdmin,
-      token: token
-    });
+
+
+   //
+  //  const payload = {id: user.id}
+  //  var token = jwt.sign(payload, jwtOptions.secretOrKey);
+
+   //
+  //  if(user.admin) {
+  //    return res.json({admin: true, token: token});
+  //  }
+  //  else {
+  //    return res.json({admin: false, token: token});
+  //  }
+
+   return res.send(user.admin);
+
+
 
   })
 

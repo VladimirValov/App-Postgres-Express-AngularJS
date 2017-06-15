@@ -13,10 +13,10 @@ module.exports = {
       }], {});
     */
     return queryInterface.bulkInsert('users', [{
-      email: 'admin@mail.ru',
-      name: 'admin',
-      password: '20dd4bca7f83e413209ba77ac7fb3f3c40558efecf2fe40c236e5ea47ffcef4e',
-      isAdmin: true,
+      email: 'user@mail.ru',
+      name: 'user',
+      password: '9aac70488c4941f2cb34cf5341f3cd3e19fabd7130a28bbeb111a92e7b345204',
+      isAdmin: false,
       createdAt: new Date(),
       updatedAt: new Date
     }])
