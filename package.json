@@ -18,7 +18,8 @@
   "homepage": "https://github.com/VladimirValov/Postgres-Express-Angular#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
-    "express": "^4.15.3", 
+    "del": "^3.0.0",
+    "express": "^4.15.3",
     "gulp": "^3.9.1",
     "gulp-concat": "^2.6.1",
     "gulp-debug": "^3.1.0",
