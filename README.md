@@ -1,3 +1,7 @@
+ # Задачи:
+* Свои классы ошибок
+* связи индексы
+
 # Postgres-Express-Angular
 Admin page for users game statistic
 
