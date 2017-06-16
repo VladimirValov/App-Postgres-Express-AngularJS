@@ -2,38 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const crypto = require('crypto');
-
-const secret = require('../config/config')['secret'];
+const passwordSecret = require('../config/config')['passwordSecret'];
 
 const db = require('../models/index.js')
 /* GET users listing. */
 
-
-
-const passport = require('passport');
 const jwt = require('jsonwebtoken');
-
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-
-
-var jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'jwtSecret';
-
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
-});
-
-
-
-
-console.log(db.user);
-
-let allUsers = "";
+const jwtSecret = require('../config/config')['jwtSecret'];
 
 router.get('/', function(req, res, next) {
-  res.send(allUsers);
+  res.send();
 });
 
 router.post('/', function(req, res) {
@@ -42,7 +20,7 @@ router.post('/', function(req, res) {
   const email = req.body.email;
   const password = req.body.password;
 
-  const hash = crypto.createHmac('sha256', secret)
+  const hash = crypto.createHmac('sha256', passwordSecret)
                    .update(password)
                    .digest('hex');
   console.log('hash: ', hash);
@@ -60,9 +38,9 @@ router.post('/', function(req, res) {
     ]
   }).then(user => {
   //  allUsers = users;
-   console.log(user.name);
-   console.log(user.isAdmin);
-   console.log(user.email);
+  //  console.log(user.name);
+  //  console.log(user.isAdmin);
+  //  console.log(user.email);
 
    if (!user){
      return res.send("Пользователь в базе не найден");
@@ -72,19 +50,23 @@ router.post('/', function(req, res) {
      return res.send("Не верный пароль!");
    }
 
-    const payload = {name: user.name}
-    var token = jwt.sign(payload, jwtOptions.secretOrKey);
+   //Generate JWT
+    let payload = {
+      name: user.name,
+      isAdmin: user.isAdmin
+    }
+
+    const token = jwt.sign(payload, jwtSecret);
+
+    console.log("Выдан Токен: ", token);
 
     return res.send({
       name: user.name,
       isAdmin: user.isAdmin,
       token: token
     });
-
   })
-
 });
-
 
 
 module.exports = router;

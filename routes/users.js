@@ -4,8 +4,6 @@ var router = express.Router();
 const db = require('../models/index.js')
 /* GET users listing. */
 
-console.log(db.user);
-
 let allUsers = "";
 
 
