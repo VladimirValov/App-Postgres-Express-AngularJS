@@ -1,4 +1,4 @@
-angular.module('core.auth').factory('Auth', [ function() {
+angular.module('core.auth').factory('Auth', [ function($http) {
   const user = {};
 
   return {
@@ -8,6 +8,7 @@ angular.module('core.auth').factory('Auth', [ function() {
       user.token = token;
       console.log("Данные пользователя сохранены");
       console.log(user);
+  //    $http.defaults.headers.common.Authorization = 'Bearer ' + response.token;
     },
     getUserName: function () {
       return user.name;
@@ -17,10 +18,16 @@ angular.module('core.auth').factory('Auth', [ function() {
     },
     isAdmin: function () {
       return user.isAdmin;
+    },
+    logout: function () {
+      this.setUser(null, null, null);
+    },
+    login: function (/*$http, $localStorage*/) {
+
     }
   }
 }]);
-
+//http://jasonwatmore.com/post/2016/04/05/angularjs-jwt-authentication-example-tutorial
 
 /*
 

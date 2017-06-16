@@ -20,10 +20,18 @@ angular.module('gameApp').config(function($stateProvider) {
     onEnter: checkAuth
   }
 
+  const logoutState = {
+    name: 'logout',
+    url: '/logout',
+    template: '<h2>Вы покинули сайт</h2> <a ui-sref="login">Войти</a>',
+    onEnter: logoutFunc
+  }
+
 
   $stateProvider.state(loginState);
   $stateProvider.state(lkAdminState);
   $stateProvider.state(lkUserState);
+  $stateProvider.state(logoutState);
 });
 
 
@@ -43,4 +51,8 @@ function checkAdmin( Auth, $state ) {
     console.log("Пользователь не администратор!");
      return $state.go('lk-user');
   }
+}
+
+function logoutFunc(Auth) {
+  Auth.logout();
 }
