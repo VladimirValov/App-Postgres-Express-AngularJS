@@ -6,8 +6,8 @@ module.exports = {
       userId: 3,
       gameId: 4,
       score: 40,
-      createdAt: new Date(),
-      updatedAt: new Date
+      createdAt: new Date(new Date() - 1000*3600*24*5),
+      updatedAt: new Date(new Date() - 1000*3600*24*4)
     }])
     /*
       Add altering commands here.

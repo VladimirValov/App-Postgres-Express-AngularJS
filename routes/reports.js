@@ -40,14 +40,61 @@ router.get('/', function(req, res, next) {
 
   const param = select || all;
 
-
-
   sequelize.query( query[param] ).then(scores => {
     res.send(scores[0])
   }).catch(err => {
       next(err);
   });
 });
+
+
+
+
+router.get('/topUser', function(req, res, next) {
+  const params = req.query ;
+  console.log(params);
+
+  const gamesList = req.query.games;
+  const fromDate = req.query.from;
+  const toDate = req.query.to;
+  const limit = req.query.limit;
+
+
+
+  sequelize.query( selectTopUser(gamesList, limit, fromDate, toDate) ).then(scores => {
+    res.send(scores[0])
+  }).catch(err => {
+      next(err);
+  });
+
+});
+
+function selectTopUser(gamesList, limit, fromDate, toDate) {
+
+  const limitResult = (limit)? `LIMIT ${limit}`: "";
+
+  const games = (gamesList)? `"G"."id" in (${gamesList})`: "";
+  const from = (fromDate) ? `"S"."createdAt" > '${fromDate}'`: "";  //'2017-06-19'
+  const to = (toDate) ? `"S"."createdAt" < '${toDate}'`: "";
+
+  let where = (games) ? games: "";
+  if (from) where = (where)? where +" AND " + from : from;
+  if (to)   where = (where) ? where + " AND " + to : to;
+  where = (where) ? "WHERE " + where : "";
+
+  const select = `
+  SELECT COUNT("U"."name") as COUNT, "U"."name", AVG("S"."score") as avgScore
+ FROM "Scores" as "S"
+ LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
+ LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"
+ ${where}
+ GROUP BY "U"."name"
+ ORDER BY COUNT("U"."name") DESC
+ ${limitResult}`
+
+ return select
+}
+
 
 
 router.post('/', function(req, res) {

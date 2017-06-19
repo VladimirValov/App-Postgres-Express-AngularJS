@@ -13,6 +13,7 @@ const authRequire = require('./middleware/authRequire');
 const loginRoute = require('./routes/login');
 const gamesRoute = require('./routes/games');
 const scoresRoute = require('./routes/scores');
+const reportsRoute = require('./routes/reports');
 
 /*
 const passport = require('passport');
@@ -61,6 +62,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/login', loginRoute);
 app.use('/games', authRequire, gamesRoute);
 app.use('/scores', scoresRoute);
+app.use('/reports', reportsRoute);
 
 
 
