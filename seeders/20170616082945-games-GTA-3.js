@@ -4,8 +4,8 @@ module.exports = {
   up: function (queryInterface, Sequelize) {
 
     return queryInterface.bulkInsert('Games', [{
-      name: 'WarCraft',
-      code: 'warcraft',
+      name: 'GTA-3',
+      code: 'gta3',
       createdAt: new Date(),
       updatedAt: new Date
     }], {});

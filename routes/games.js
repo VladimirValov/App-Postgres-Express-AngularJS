@@ -2,19 +2,20 @@ const express = require('express');
 const router = express.Router();
 
 const db = require('../models/index.js');
-const Games = db.games;
+
+const Game = db.Game;
 
 
 router.get('/', function(req, res, next) {
-  Games.findAll({
+  Game.findAll({
     attributes: [
       'id',
       'name',
       'code'
-  ]}).then(games => {
-    if(!games) throw new Error("Игры не найдено");
-    console.log('find games: ', games.length);
-    res.send(games);
+  ]}).then(Game => {
+    if(!Game) throw new Error("Игры не найдено");
+    console.log('find Game: ', Game.length);
+    res.send(Game);
   }).catch((err) => {
     next(err);
   })
@@ -24,7 +25,7 @@ router.get('/', function(req, res, next) {
 router.get('/:game_id', function(req, res, next) {
   const gameId = req.params.game_id;
 
-  Games.findById(gameId).then(game => {
+  Game.findById(gameId).then(game => {
     if(!game) throw new Error("Игры с таким кодом не найдено");
     res.send({
       id: game.id,
@@ -43,7 +44,7 @@ router.post('/', function(req, res, next) {
   if (!data.code) throw new Error("Не передан код");
   if (!data.name) throw new Error("Не передано имя");
 
-  const game = new Games();
+  const game = new Game();
   game.name = data.name;
   game.code = data.code;
   game.save().then((game) => {
@@ -66,7 +67,7 @@ router.put('/:game_id', function(req, res, next) {
     if (!data.code) throw new Error('Не передан code');
     if (!data.name) throw new Error('Не передано имя');
   }).then(() => {
-    return Games.findById(gameId);
+    return Game.findById(gameId);
   }).then(game => {
     if (!game) throw new Error('Такой игры в базе нет');
     game.name = data.name;
@@ -86,7 +87,7 @@ router.put('/:game_id', function(req, res, next) {
 
 router.delete('/:game_id', function(req, res, next) {
   const game_id = req.params.game_id;
-  Games.findById(game_id).then(game => {
+  Game.findById(game_id).then(game => {
     if(!game) throw new Error("Игры с таким кодом не найдено");
     return game.destroy();
   }).then(() => {

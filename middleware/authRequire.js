@@ -16,12 +16,12 @@ module.exports = function(req, res, next) {
   let decoded = jwt.verify(token, jwtSecret, function(err, decoded) {
 
     if (err) {
-      console.log(err);
+  //    console.log(err);
       return res.status(401).send("authRequire: Токен не верифицирован");
     }
 //    next();
 
     console.log('decoded token payload', decoded);
-    next()
+  next()
   })
 }

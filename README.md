@@ -6,24 +6,36 @@
 Admin page for users game statistic
 
 
+sequelize help:model:create
+
 Sequelize Migration
 
 # npm install --save sequelize-cli
 
 # sequelize init  # Initializes the project.
 
-# user
-sequelize model:create --name user --attributes 'name:string, email:string, password:string, admin:boolean'
+# Model Create
+sequelize model:create --name User --attributes 'name:string, email:string, password:string, isAdmin:boolean'
 
-# games
+sequelize model:create --name Score --attributes 'score:integer'
 
-sequelize model:create --name games --attributes 'name:string, code:number'
+sequelize model:create --name Game --attributes 'name:string, code:string'
 
-# sequelize db:migrate        # Run pending migrations.
+
+
+# Миграция таблиц в базу
+sequelize db:migrate        # Run pending migrations.
 
 # sequelize seed:create
 
-# sequelize db:seed:all
+# Миграция записей в базы
+sequelize db:seed:all
 
 # seed
-sequelize db:seed:20170616082945-games-starcraft.js
+
+
+
+
+
+Запуск проекта
+nodemon app.js

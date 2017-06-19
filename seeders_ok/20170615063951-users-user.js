@@ -12,7 +12,7 @@ module.exports = {
         isBetaMember: false
       }], {});
     */
-    return queryInterface.bulkInsert('users', [{
+    return queryInterface.bulkInsert('Users', [{
       email: 'user@mail.ru',
       name: 'user',
       password: '9aac70488c4941f2cb34cf5341f3cd3e19fabd7130a28bbeb111a92e7b345204',

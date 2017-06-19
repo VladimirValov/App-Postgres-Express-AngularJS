@@ -1,13 +1,8 @@
 'use strict';
 module.exports = function(sequelize, DataTypes) {
-  var Games = sequelize.define('games', {
+  var Game = sequelize.define('Game', {
     name: DataTypes.STRING,
-    code: {
-      type: DataTypes.INTEGER,
-      validate: {
-        isInt: true
-      }
-    }
+    code: DataTypes.STRING
   }, {
     classMethods: {
       associate: function(models) {
@@ -15,5 +10,5 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
-  return Games;
+  return Game;
 };

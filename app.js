@@ -11,8 +11,8 @@ const authRequire = require('./middleware/authRequire');
 //const indexRoute = require('./routes/index');
 //const users = require('./routes/users');
 const loginRoute = require('./routes/login');
-
 const gamesRoute = require('./routes/games');
+const scoresRoute = require('./routes/scores');
 
 /*
 const passport = require('passport');
@@ -60,6 +60,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/users', users);
 app.use('/login', loginRoute);
 app.use('/games', authRequire, gamesRoute);
+app.use('/scores', scoresRoute);
 
 
 
@@ -74,7 +75,7 @@ app.use(function(req, res, next) {
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
-  console.log(err);
+  //console.log(err);
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
 
