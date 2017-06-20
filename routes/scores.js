@@ -30,11 +30,6 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/', function(req, res, next) {
-
-  Game.findByCode('gta2').then(result =>{
-    console.log(result.name);
-  });
-
   console.log(req.body);
   const data = req.body;
   if (!data.email) throw new Error("Не передан email");
@@ -58,6 +53,5 @@ router.post('/', function(req, res, next) {
     })
   }).catch(err => {next(err)});
 });
-
 
 module.exports = router;

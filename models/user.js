@@ -21,12 +21,11 @@ module.exports = function(sequelize, DataTypes) {
 
    User.createByEmail = function (email) {
     const user = new User();
-    user.email = data.email;
+    user.email = email;
     user.isAdmin = false;
 
-    let name = data.email.match(/[a-zA-Z0-9]+/)[0]
+    let name = email.match(/[a-zA-Z0-9]+/)[0]
     user.name = user.password = name;
-
     return user.save();
   }
 

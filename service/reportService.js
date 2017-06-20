@@ -24,7 +24,7 @@ function getTopUsers(gamesList, limit, fromDate, toDate) {
   const where = generateWhere(games, from, to);
 
   const select = `
-  SELECT COUNT("U"."name") as COUNT, "U"."name", AVG("S"."score") as avgScore
+  SELECT COUNT("U"."name") as COUNT, "U"."name", ROUND( AVG("S"."score"), 0) as avgScore
  FROM "Scores" as "S"
  LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
  LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"
@@ -54,7 +54,7 @@ function getTopGames(userList, limit, fromDate, toDate) {
   const where = generateWhere(users, from, to);
 
   const select = `
-  SELECT COUNT("G"."name") as COUNT, "G"."name", AVG("S"."score") as avgScore
+  SELECT COUNT("G"."name") as COUNT, "G"."name", ROUND( AVG("S"."score"), 0) as avgScore
  FROM "Scores" as "S"
  LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
  LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"

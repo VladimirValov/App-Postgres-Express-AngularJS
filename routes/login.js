@@ -5,6 +5,7 @@ const crypto = require('crypto');
 const passwordSecret = require('../config/config')['passwordSecret'];
 
 const db = require('../models/index.js')
+const User = db.User;
 /* GET users listing. */
 
 const jwt = require('jsonwebtoken');
@@ -26,7 +27,7 @@ router.post('/', function(req, res) {
   console.log('hash: ', hash);
 
 
-  db.user.findOne({
+  db.User.findOne({
     where: {
       email: req.body.email
     },
@@ -37,10 +38,6 @@ router.post('/', function(req, res) {
       'password'
     ]
   }).then(user => {
-  //  allUsers = users;
-  //  console.log(user.name);
-  //  console.log(user.isAdmin);
-  //  console.log(user.email);
 
    if (!user){
      return res.send("Пользователь в базе не найден");
@@ -57,7 +54,6 @@ router.post('/', function(req, res) {
     }
 
     const token = jwt.sign(payload, jwtSecret);
-
     console.log("Выдан Токен: ", token);
 
     return res.send({
