@@ -10,5 +10,12 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  Game.findByCode = function (code) {
+    return Game.findOne({
+      where: {code: code}
+    })
+  };
+
   return Game;
 };

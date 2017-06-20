@@ -30,55 +30,34 @@ router.get('/', function(req, res, next) {
 
 
 router.post('/', function(req, res, next) {
+
+  Game.findByCode('gta2').then(result =>{
+    console.log(result.name);
+  });
+
   console.log(req.body);
   const data = req.body;
+  if (!data.email) throw new Error("Не передан email");
+  if (!data.game_code) throw new Error("Не передано код игры");
+  if (!data.score) throw new Error("Не переданы очки ");
 
-    if (!data.email) throw new Error("Не передан email");
-    if (!data.game_code) throw new Error("Не передано код игры");
-    if (!data.score) throw new Error("Не переданы очки ");
+  Promise.all([User.findByEmail(data.email), Game.findByCode(data.game_code)]).then(result => {
+    [user, game] = result;
 
-    let userId = User.findOne({
-      where: {email: data.email},
-      attributes: ['id']
-    }).then(result => {
-
-      if (result) return result.id;
-
-      console.log("User не найден");
-      const user = new User();
-      user.email = data.email;
-      user.isAdmin = false;
-
-      let name = data.email.match(/[a-zA-Z0-9]+/)[0]
-      user.name = user.password = name;
-
-      return user.save().then(user => {
-  //      console.log(user.dataValues);
-        return user.id;
-      });
-    })
-
-    let gameId = Game.findOne({
-      where: {code: data.game_code},
-      attributes: ['id']
-    }).then(result => {
-      if (!result) throw new Error("Game не найдена");
-      return result.id;
-    });
-
-    Promise.all([userId, gameId]).then(result => {
-      console.log(result);
-
-      let score = new Score();
-      [score.userId, score.gameId] = result;
-      score.score = data.score;
-
-      return score.save()
+    return Promise.resolve().then(() => {
+      if (!game) throw new Error("Игра не найдена");
+      return user || User.createByEmail(data.email)
+    }).then(user => {
+        return Score.create({
+          userId:user.id,
+          gameId: game.id,
+          score: data.score
+        });
     }).then(score => {
       res.send(score);
-    }).catch(err => {next(err)})
-
-
+    })
+  }).catch(err => {next(err)});
 });
+
 
 module.exports = router;

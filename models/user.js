@@ -12,5 +12,23 @@ module.exports = function(sequelize, DataTypes) {
       }
     }
   });
+
+  User.findByEmail = function (email) {
+    return User.findOne({
+      where: {email: email}
+    })
+  }
+
+   User.createByEmail = function (email) {
+    const user = new User();
+    user.email = data.email;
+    user.isAdmin = false;
+
+    let name = data.email.match(/[a-zA-Z0-9]+/)[0]
+    user.name = user.password = name;
+
+    return user.save();
+  }
+
   return User;
 };
