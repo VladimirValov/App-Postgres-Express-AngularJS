@@ -1,5 +1,5 @@
 angular.module('lkAdmin').component('lkAdmin', {
-  templateUrl: 'components/lk-admin/lk-admin.template.html',
+  templateUrl: 'template/lk-admin.template.html',
   controller: LkAdminController
 })
 

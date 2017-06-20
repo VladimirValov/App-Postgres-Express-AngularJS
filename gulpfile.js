@@ -8,6 +8,7 @@ const debug = require('gulp-debug');
 const uglify = require('gulp-uglify');
 const newer = require('gulp-newer');
 const del = require('del');
+const flatten = require('gulp-flatten');
 
 
 gulp.task('clean', function() {
@@ -15,11 +16,19 @@ gulp.task('clean', function() {
   return del(['public']);
 })
 
-gulp.task('html', function() {
-  return gulp.src('source/**/*.html')
+gulp.task('html', ['template'], function() {
+  return gulp.src('source/*.html')
   .pipe(newer('public')) //Только обновленные файлы
   .pipe(debug({title: 'src'}))
   .pipe(gulp.dest('public'));
+})
+
+gulp.task('template', function() {
+  return gulp.src('source/**/*template.html')
+  .pipe(newer('public')) //Только обновленные файлы
+  .pipe(debug({title: 'src'}))
+  .pipe(flatten())
+  .pipe(gulp.dest('public/template'));
 })
 
 gulp.task('css', function() {

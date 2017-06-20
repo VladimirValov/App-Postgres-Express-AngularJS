@@ -1,5 +1,5 @@
 angular.module('lkUser').component('lkUser', {
-  templateUrl: 'components/lk-user/lk-user.template.html',
+  templateUrl: 'template/lk-user.template.html',
   controller: LkUserController
 })
 

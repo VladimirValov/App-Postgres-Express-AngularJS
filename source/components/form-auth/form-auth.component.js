@@ -1,5 +1,5 @@
 angular.module('formAuth').component('formAuth', {
-  templateUrl: 'components/form-auth/form-auth.template.html',
+  templateUrl: 'template/form-auth.template.html',
   controller: FormAuthController
 })
 
