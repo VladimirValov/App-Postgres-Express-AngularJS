@@ -1,37 +1,18 @@
 const express = require('express');
 const router = express.Router();
-var Sequelize = require('sequelize');
-var env       = process.env.NODE_ENV || 'development';
-var config    = require(__dirname + '/../config/config.json')[env];
-
-if (config.use_env_variable) {
-  var sequelize = new Sequelize(process.env[config.use_env_variable]);
-} else {
-  var sequelize = new Sequelize(config.database, config.username, config.password, config);
-}
 
 const db = require('../models/index.js');
-const Score = db.Score;
 
+const Game = db.Game;
+const User = db.User;
+const Score = db.Score;
 
 
 const query = {
   all: `
           SELECT "U"."name" as "user", "G"."name" as "game", "S"."score" FROM "Scores" as "S"
           LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
-          LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"`,
-  topGame: `
-          SELECT COUNT("G"."name") as "Played",  "G"."name" as "game" FROM "Scores" as "S"
-          LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
-          LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"
-          GROUP BY "G"."name"
-          ORDER BY COUNT("G"."name") DESC`,
-  topUser: `
-          SELECT COUNT("U"."name") as "Played",  "U"."name" as "user" FROM "Scores" as "S"
-          LEFT JOIN "Games" as "G" on "S"."gameId" = "G"."id"
-          LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"
-          GROUP BY "U"."name"
-          ORDER BY COUNT("U"."name") DESC`
+          LEFT JOIN "Users" as "U" on "S"."userId" = "U"."id"`
 }
 
 router.get('/', function(req, res, next) {
@@ -39,8 +20,6 @@ router.get('/', function(req, res, next) {
   console.log(select);
 
   const param = select || all;
-
-
 
   sequelize.query( query[param] ).then(scores => {
     res.send(scores[0])
@@ -50,9 +29,56 @@ router.get('/', function(req, res, next) {
 });
 
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
   console.log(req.body);
-  return res.status().send();
+  const data = req.body;
+
+    if (!data.email) throw new Error("Не передан email");
+    if (!data.game_code) throw new Error("Не передано код игры");
+    if (!data.score) throw new Error("Не переданы очки ");
+
+    let userId = User.findOne({
+      where: {email: data.email},
+      attributes: ['id']
+    }).then(result => {
+
+      if (result) return result.id;
+
+      console.log("User не найден");
+      const user = new User();
+      user.email = data.email;
+      user.isAdmin = false;
+
+      let name = data.email.match(/[a-zA-Z0-9]+/)[0]
+      user.name = user.password = name;
+
+      return user.save().then(user => {
+  //      console.log(user.dataValues);
+        return user.id;
+      });
+    })
+
+    let gameId = Game.findOne({
+      where: {code: data.game_code},
+      attributes: ['id']
+    }).then(result => {
+      if (!result) throw new Error("Game не найдена");
+      return result.id;
+    });
+
+    Promise.all([userId, gameId]).then(result => {
+      console.log(result);
+
+      let score = new Score();
+      [score.userId, score.gameId] = result;
+      score.score = data.score;
+
+      return score.save()
+    }).then(score => {
+      res.send(score);
+    }).catch(err => {next(err)})
+
+
 });
 
 module.exports = router;
