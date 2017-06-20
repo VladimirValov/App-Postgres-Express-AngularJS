@@ -60,9 +60,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 //app.use('/', indexRoute);
 //app.use('/users', users);
 app.use('/login', loginRoute);
-app.use('/games', authRequire, gamesRoute);
-app.use('/scores', scoresRoute);
-app.use('/reports', reportsRoute);
+app.use('/games', /*authRequire,*/ gamesRoute);
+app.use('/scores', /*authRequire,*/ scoresRoute);
+app.use('/reports',/*authRequire,*/  reportsRoute);
 
 
 

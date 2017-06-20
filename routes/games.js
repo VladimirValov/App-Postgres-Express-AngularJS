@@ -8,14 +8,13 @@ const Game = db.Game;
 
 router.get('/', function(req, res, next) {
   Game.findAll({
-    attributes: [
-      'id',
-      'name',
-      'code'
-  ]}).then(Game => {
-    if(!Game) throw new Error("Игры не найдено");
-    console.log('find Game: ', Game.length);
-    res.send(Game);
+    order: [
+      ['updatedAt','DESC']
+    ]}
+).then(game => {
+    if(!game) throw new Error("Игры не найдено");
+    console.log('find Game: ', game.length);
+    res.send(game);
   }).catch((err) => {
     next(err);
   })
@@ -48,11 +47,7 @@ router.post('/', function(req, res, next) {
   game.name = data.name;
   game.code = data.code;
   game.save().then((game) => {
-    res.send({
-      id: game.id,
-      name: game.name,
-      code: game.code
-    });
+    res.send(game);
   }).catch(err => {
     next(err);
   });
@@ -62,6 +57,7 @@ router.post('/', function(req, res, next) {
 router.put('/:game_id', function(req, res, next) {
   const gameId = req.params.game_id;
   const data = req.body;
+  console.log(data);
 
   Promise.resolve().then(() => {
     if (!data.code) throw new Error('Не передан code');

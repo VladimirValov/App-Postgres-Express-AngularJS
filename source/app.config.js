@@ -9,8 +9,8 @@ angular.module('gameApp').config(function($stateProvider) {
   const lkAdminState = {
     name: 'lk-admin',
     url: '/lk-admin',
-    component: 'lkAdmin',
-    onEnter: checkAdmin
+    component: 'lkAdmin'/*,
+    onEnter: checkAdmin*/
   }
 
   const lkUserState = {

@@ -1,1 +1,77 @@
-<p>Template GameListController</p>
+
+<div class="row">
+  <div class="col-xs-12">
+
+    <form name="form" novalidate class="form-inline ">
+      <div class="form-group">
+        <label>Название игры</label>
+        <input type="text" ng-model="game.name" name="name" class="form-control" required>
+        <div ng-show="form.$submitted || form.name.$touched" class="error">
+          <span ng-show="form.name.$error.required">Введите название игры</span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>Код игры</label>
+        <input type="text" ng-model="game.code" name="game_code" class="form-control" required>
+        <div ng-show="form.$submitted || form.code.$touched" class="error">
+          <span ng-show="form.code.$error.required">Ведите код игры</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary" ng-click="$ctrl.createGame(game)" >Добавить игру</button>
+
+    </form>
+    <br>
+    {{$ctrl.result}}
+    <br>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-7 col-lg-8">
+     <table class="table table-bordered table-hover text-center">
+      <tbody>
+        <tr class="active">
+          <td>№</td>
+          <td>ID</td>
+          <td>Name</td>
+          <td>Code</td>
+        </tr>
+
+        <tr ng-repeat="game in $ctrl.games" ng-click="$ctrl.chooseGame($index, game)" ng-class="(game.id == $ctrl.targetGame.id) ? 'success' :'' ">
+          <td>{{$index +1}}</td>
+          <td>{{game.id}}</td>
+          <td>{{game.name}}</td>
+          <td>{{game.code}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <div class="col-sm-5 col-lg-4 ">
+    <div ng-show="$ctrl.targetGame.status">
+      <form name="form-edit" novalidate class="min-width-300 affix">
+        <h2 class="text-center">Изменение игры</h2>
+         <p class="bg-warning text-center">{{$ctrl.targetGame.status}}</p>
+        <div class="form-group">
+          <label>Название игры</label>
+          <input type="text" ng-model="$ctrl.targetGame.name" name="name" class="form-control" required>
+          <div ng-show="form.$submitted || form.name.$touched" class="error">
+            <span ng-show="form.name.$error.required">Введите название игры</span>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Код игры</label>
+          <input type="text" ng-model="$ctrl.targetGame.code" name="game_code" class="form-control" required>
+          <div ng-show="form.$submitted || form.code.$touched" class="error">
+            <span ng-show="form.code.$error.required">Ведите код игры</span>
+          </div>
+        </div>
+
+        <button type="submit" class="btn btn-success" ng-click="$ctrl.changeGame()">Изменить игру</button>
+        <button type="submit" class="btn btn-danger" ng-click="$ctrl.deleteGame()">Удалить игру</button>
+      </form>
+    </div>
+
+  </div>
+</div>

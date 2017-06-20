@@ -10,9 +10,31 @@
 }
 .error {
   color:red;
+
+}
+@media(min-width:800px) {
+    .error {
+      position:absolute;
+      text-align: right;
+      margin-left: 110px;
+    }
 }
 
 select.ng-valid, input.ng-valid {
   background-color: #c8ffd6 !important;
   background-color: rgba(233, 255, 48, 0.27) !important;
+}
+.table-hover{
+  cursor: pointer !important;
+}
+.min-width-300{
+  min-width: 300px;
+}
+button + button {
+  margin-left: 5px;
+
+}
+
+.bg-info, .bg-warning {
+  padding: 5px;
 }
