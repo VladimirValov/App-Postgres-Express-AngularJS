@@ -47,7 +47,7 @@ router.post('/', function(req, res, next) {
   game.name = data.name;
   game.code = data.code;
   game.save().then((game) => {
-    res.send(game);
+    res.status(201).send(game);
   }).catch(err => {
     next(err);
   });
@@ -87,7 +87,7 @@ router.delete('/:game_id', function(req, res, next) {
     if(!game) throw new Error("Игры с таким кодом не найдено");
     return game.destroy();
   }).then(() => {
-    return res.send("game destroyed");
+    return res.status(204).send(null);
   }).catch((err) => {
     next(err);
   })

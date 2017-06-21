@@ -19,6 +19,11 @@ angular.module('gameApp').config(function($stateProvider) {
     component: 'lkUser',
     onEnter: checkAuth
   }
+  const reportsState = {
+    name: 'reports-games',
+    url: '/reports-games',
+    component: 'reportsGames'
+  }
 
   const logoutState = {
     name: 'logout',
@@ -30,6 +35,8 @@ angular.module('gameApp').config(function($stateProvider) {
 
   $stateProvider.state(loginState);
   $stateProvider.state(lkAdminState);
+  $stateProvider.state(reportsState);
+
   $stateProvider.state(lkUserState);
   $stateProvider.state(logoutState);
 });

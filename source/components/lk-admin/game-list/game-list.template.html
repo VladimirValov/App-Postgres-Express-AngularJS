@@ -28,6 +28,7 @@
 </div>
 <div class="row">
   <div class="col-sm-7 col-lg-8">
+  <!-- <div class="col-lg-8" ng-class="($ctrl.targetGame.status) ? 'col-sm-7' : 'col-sm-10'"> -->
      <table class="table table-bordered table-hover text-center">
       <tbody>
         <tr class="active">
@@ -49,7 +50,7 @@
 
 
   <div class="col-sm-5 col-lg-4 ">
-    <div ng-show="$ctrl.targetGame.status">
+    <div ng-hide="!$ctrl.targetGame.status">
       <form name="form-edit" novalidate class="min-width-300 affix">
         <h2 class="text-center">Изменение игры</h2>
          <p class="bg-warning text-center">{{$ctrl.targetGame.status}}</p>

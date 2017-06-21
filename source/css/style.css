@@ -38,3 +38,6 @@ button + button {
 .bg-info, .bg-warning {
   padding: 5px;
 }
+a + a {
+  margin-left: 5px;
+}

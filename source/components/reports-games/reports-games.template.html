@@ -1,0 +1,55 @@
+<h2>Отчеты по играм</h2>
+<hr>
+<div class="row">
+  <div class="col-sm-7 col-lg-8">
+    <h3>Самые популярные игры</h3>
+    <hr>
+  <!-- <div class="col-lg-8" ng-class="($ctrl.targetGame.status) ? 'col-sm-7' : 'col-sm-10'"> -->
+     <table class="table table-bordered table-hover text-center">
+      <tbody>
+        <tr class="active">
+          <td>№</td>
+          <td>Game</td>
+          <td>Count</td>
+          <td>AVG Score</td>
+        </tr>
+
+        <tr ng-repeat="report in $ctrl.reportGames" >
+          <td>{{$index +1}}</td>
+          <td>{{report.name}}</td>
+          <td>{{report.count}}</td>
+          <td>{{report.avgscore}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="col-sm-5 col-lg-4 ">
+    <div ng-hide="">
+      <form name="form-params" novalidate class="min-width-300">
+        <h3 class="text-center">Параметры отчета</h3>
+         <p class="bg-warning text-center">{{$ctrl.paramsReport}}</p>
+
+        <div class="form-group">
+          <label>Количество результатов</label>
+          <input type="text" ng-model="$ctrl.paramsReport.limit" name="limit" class="form-control" required>
+          <div ng-show="form.$submitted || form.name.$touched" class="error">
+            <span ng-show="form.name.$error.required">Введите название игры</span>
+          </div>
+        </div>
+
+
+        <button type="submit" class="btn btn-success" ng-click="$ctrl.changeGame()">Изменить игру</button>
+        <button type="submit" class="btn btn-danger" ng-click="$ctrl.deleteGame()">Удалить игру</button>
+      </form>
+    </div>
+
+  </div>
+
+
+</div>
+
+
+{{$ctrl.reportGames}}
+<p>reports-games</p>
+<hr>
