@@ -40,8 +40,9 @@
 
         <div class="form-group">
           <label>По игрокам</label>
-          <select class="form-control" ng-model="paramsReport.users1" name="users1"
-            ng-options="user for user in ['user', 'admin', 'sveta', 'vova', 'lena'] " multiple>
+          <select class="form-control" ng-model="paramsReport.users" name="users" multiple>
+            <option ng-repeat="user in $ctrl.usersList" label="{{user.name}}"  value="{{user.id}}"></option>
+            <!-- ng-options="user.name for user in $ctrl.usersList track by user.id"  -->
           </select>
         </div>
         <div class="form-group">
@@ -69,8 +70,6 @@
 
 
 </div>
-
-
-{{$ctrl.reportGames}}
+<hr>
 <p>reports-games</p>
 <hr>

@@ -15,7 +15,12 @@ function ReportsGamesController($http, Auth /*, $state*/, $scope) {
   }
   this.getReport();
 
-
+  this.getUsers = function() {
+    $http.get('/users').then(users => {
+      this.usersList=users.data;
+    })
+  }
+  this.getUsers();
 
   $scope.open1 = function() {
    $scope.popup1.opened = true;
