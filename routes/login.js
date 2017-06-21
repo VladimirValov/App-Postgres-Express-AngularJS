@@ -15,7 +15,7 @@ router.get('/', function(req, res, next) {
   res.send();
 });
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
   console.log(req.body);
   const email = req.body.email;
   const password = req.body.password;
@@ -37,7 +37,7 @@ router.post('/', function(req, res) {
     payload.token = token;
 
     return res.send(payload);
-  })
+  }).catch(err => {next(err)})
 });
 
 

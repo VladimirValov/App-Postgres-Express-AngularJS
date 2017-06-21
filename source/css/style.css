@@ -30,6 +30,12 @@ select.ng-valid, input.ng-valid {
 .min-width-300{
   min-width: 300px;
 }
+.col-fix-100{
+  width: 100px;
+}
+.min-width-300{
+  min-width: 300px;
+}
 button + button {
   margin-left: 5px;
 
@@ -39,5 +45,35 @@ button + button {
   padding: 5px;
 }
 a + a {
-  margin-left: 5px;
+  margin-left: 7px;
+}
+
+
+.flex-container {
+  display: flex !important;
+  justify-content: space-around !important;
+  flex-wrap: wrap ;
+  align-items: flex-start !important;
+}
+
+.flex-item {
+  display: flex;
+  width: 250px;
+  flex-wrap: nowrap ;
+  align-items: baseline;
+  margin-bottom: 10px;
+  justify-content: center;
+}
+.flex-item label {
+  min-width: 100px;
+}
+
+.flex-item-1 {
+  flex-grow: 2;
+}
+.flex-item-2 {
+  flex-grow: 1;
+}
+img {
+  width: 100%;
 }

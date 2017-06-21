@@ -1,5 +1,6 @@
 angular.module('lkAdmin',[
-  'gameList'
+  'gameList',
+  'reportsGames'
 //  'core.auth'
 
 ]);

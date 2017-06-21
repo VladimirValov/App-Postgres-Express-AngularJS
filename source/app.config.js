@@ -13,16 +13,22 @@ angular.module('gameApp').config(function($stateProvider) {
     onEnter: checkAdmin*/
   }
 
+  const reportsGamesState = {
+    name: 'lk-admin.reports-games',
+    url: '/reports-games',
+    component: 'reportsGames'
+  }
+  const gameListState = {
+    name: 'lk-admin.game-list',
+    url: '/game-list',
+    component: 'gameList'
+  }
+
   const lkUserState = {
     name: 'lk-user',
     url: '/lk-user',
     component: 'lkUser',
     onEnter: checkAuth
-  }
-  const reportsState = {
-    name: 'reports-games',
-    url: '/reports-games',
-    component: 'reportsGames'
   }
 
   const logoutState = {
@@ -35,8 +41,8 @@ angular.module('gameApp').config(function($stateProvider) {
 
   $stateProvider.state(loginState);
   $stateProvider.state(lkAdminState);
-  $stateProvider.state(reportsState);
-
+  $stateProvider.state(reportsGamesState);
+  $stateProvider.state(gameListState);
   $stateProvider.state(lkUserState);
   $stateProvider.state(logoutState);
 });
