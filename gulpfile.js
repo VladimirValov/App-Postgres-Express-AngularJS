@@ -31,6 +31,13 @@ gulp.task('template', function() {
   .pipe(gulp.dest('public/template'));
 })
 
+gulp.task('fonts', function() {
+  return gulp.src('source/bower_components/bootstrap/fonts/*.*')
+  .pipe(newer('public')) //Только обновленные файлы
+  .pipe(debug({title: 'src'}))
+  .pipe(gulp.dest('public/fonts'));
+})
+
 gulp.task('css', function() {
   return gulp.src([
     'source/css/*.css',
@@ -65,7 +72,11 @@ gulp.task('js', function() {
 gulp.task('lib', function() {
   return gulp.src([
     'source/bower_components/angular/angular.js',
-    'source/bower_components/angular-ui-router/release/angular-ui-router.js'
+    'source/bower_components/angular-ui-router/release/angular-ui-router.js',
+    'source/bower_components/angular-bootstrap/ui-bootstrap.js',
+    'source/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
+    'source/bower_components/angular-animate/angular-animate.js',
+    'source/bower_components/angular-sanitize/angular-sanitize.js'
   ])
   .pipe(newer('public/lib')) //Только обновленные файлы
   .pipe(debug({title: 'src'}))
@@ -74,7 +85,7 @@ gulp.task('lib', function() {
 })
 
 
-gulp.task('build', ['html', 'css', 'lib', 'js'], function() {
+gulp.task('build', ['html', 'css', 'lib', 'js', 'fonts'], function() {
   gulp.watch('source/**/*.html', ['html']);
   gulp.watch('source/css/*.css', ['css']);
   gulp.watch('source/lib/*.js', ['lib']);
