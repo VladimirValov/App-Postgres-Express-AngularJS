@@ -15,53 +15,29 @@ router.get('/', function(req, res, next) {
   res.send();
 });
 
-router.post('/', function(req, res) {
+router.post('/', function(req, res, next) {
   console.log(req.body);
-
   const email = req.body.email;
   const password = req.body.password;
+  if (!email) throw new Error ("Не передан email");
+  if (!password) throw new Error ("Не передан пароль!");
 
-  const hash = crypto.createHmac('sha256', passwordSecret)
-                   .update(password)
-                   .digest('hex');
-  console.log('hash: ', hash);
-
-
-  db.User.findOne({
-    where: {
-      email: req.body.email
-    },
-    attributes: [
-      'name',
-      'email',
-      'isAdmin',
-      'password'
-    ]
-  }).then(user => {
-
-   if (!user){
-     return res.send("Пользователь в базе не найден");
-   }
-
-   if (user.password != hash) {
-     return res.send("Не верный пароль!");
-   }
-
+  const hashPassword = crypto.createHmac('sha256', passwordSecret).update(password).digest('hex');
+  //console.log('hashPassword : ', hashPassword);
+  User.findByEmail(email).then(user => {
+    if (!user) throw new Error ("Пользователь в базе не найден");
+    if (user.password != hashPassword) throw new Error ("Не верный пароль!");
    //Generate JWT
     let payload = {
       name: user.name,
       isAdmin: user.isAdmin
     }
-
     const token = jwt.sign(payload, jwtSecret);
     console.log("Выдан Токен: ", token);
+    payload.token = token;
 
-    return res.send({
-      name: user.name,
-      isAdmin: user.isAdmin,
-      token: token
-    });
-  })
+    return res.send(payload);
+  }).catch(err => {next(err)})
 });
 
 

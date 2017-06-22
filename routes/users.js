@@ -2,19 +2,19 @@ var express = require('express');
 var router = express.Router();
 
 const db = require('../models/index.js')
-/* GET users listing. */
-
-let allUsers = "";
-
+const User = db.User;
 
 
 router.get('/', function(req, res, next) {
-  db.user.findAll().then(users => {
-    allUsers = users;
-    console.log(users)
+  User.findAll({attributes: [
+    'id',
+    'name',
+    'email'
+  ]}).then(users => {
+    console.log('find users', users.length)
+    res.send(users);
   })
 
-  res.send(allUsers);
 });
 
 

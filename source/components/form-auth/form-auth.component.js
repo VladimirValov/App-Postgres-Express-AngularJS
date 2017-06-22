@@ -1,5 +1,5 @@
 angular.module('formAuth').component('formAuth', {
-  templateUrl: 'components/form-auth/form-auth.template.html',
+  templateUrl: 'template/form-auth.template.html',
   controller: FormAuthController
 })
 
@@ -30,6 +30,7 @@ function FormAuthController($http, Auth, $state) {
 
       if(user.token) {
         Auth.setUser(user.name, user.isAdmin, user.token);
+    //    $httpProvider.defaults.headers.common.Authorization = user.token;
       }
 
       if(user.isAdmin == true) {

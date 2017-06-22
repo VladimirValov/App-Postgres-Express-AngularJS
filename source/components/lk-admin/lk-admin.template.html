@@ -1,6 +1,21 @@
-<h2>Личный кабинет администратора</h2>
 
-   Здравствуйте! {{$ctrl.userName}}
+<div class="row">
+  <div class="col-xs-8 col-xs-8 ">
+    <a ui-sref="lk-admin">Админка</a>
+    <a ui-sref="lk-admin.game-list"> Справоник игр</a>
+    <a ui-sref="lk-admin.reports-games">Отчеты по играм</a>
+  </div>
+  <div class="col-xs-4 col-xs-4 text-right">
+    Здравствуйте! {{$ctrl.userName}}
+    | <a ui-sref="logout">Выход</a> |
+  </div>
+</div>
 <hr>
-<p>lk-admin</p>
-<hr>
+
+<div class="row">
+  <div class="col-xs-12">
+    <ui-view></ui-view>
+    <p>lk-admin</p>
+    <hr>
+  </div>
+</div>

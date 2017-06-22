@@ -14,19 +14,27 @@
   <title> Angular </title>
 </head>
 <body>
+
   <hr>
   <div class="container-fluid">
     <ui-view></ui-view>
   </div>
-  <hr>
-  <p>index.html</p>
-  <hr>
+  <div class="container-fluid ">
+    <hr>
+    <p>index.html</p>
+    <hr>
+  </div>
   <div class="container-fluid">
-    Cостояния:
-    <a ui-sref="login">Авторизация</a>  |
-    <a ui-sref="lk-admin">Админка</a> |
-    <a ui-sref="lk-user">Страница пользователя</a> |
-    <a ui-sref="logout">Выход</a>
+    <div class="row">
+      <div class="col-xs-12 col-xs-8 ">
+        Cостояния:
+        <a ui-sref="login">Авторизация</a>  |
+        <a ui-sref="lk-admin">Админка</a> |
+        <a ui-sref="reports-games">Отчеты по играм</a> |
+        <a ui-sref="lk-user">Страница пользователя</a> |
+        <a ui-sref="logout">Выход</a>
+      </div>
+    </div>
   </div>
 </body>
 </html>

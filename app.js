@@ -9,7 +9,7 @@ const bodyParser = require('body-parser');
 const authRequire = require('./middleware/authRequire');
 
 //const indexRoute = require('./routes/index');
-//const users = require('./routes/users');
+const usersRoute = require('./routes/users');
 const loginRoute = require('./routes/login');
 const gamesRoute = require('./routes/games');
 const scoresRoute = require('./routes/scores');
@@ -58,11 +58,11 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 //app.use('/', indexRoute);
-//app.use('/users', users);
+app.use('/users', /*authRequire,*/ usersRoute);
 app.use('/login', loginRoute);
-app.use('/games', authRequire, gamesRoute);
-app.use('/scores', scoresRoute);
-app.use('/reports', reportsRoute);
+app.use('/games', /*authRequire,*/ gamesRoute);
+app.use('/scores', /*authRequire,*/ scoresRoute);
+app.use('/reports',/*authRequire,*/  reportsRoute);
 
 
 
