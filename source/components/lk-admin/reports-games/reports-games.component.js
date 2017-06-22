@@ -4,54 +4,61 @@ angular.module('reportsGames').component('reportsGames', {
 })
 
 
-
-
-
-function ReportsGamesController($http, Auth /*, $state*/, $scope) {
+function ReportsGamesController($http, $q, Auth /*, $state*/, $scope) {
   this.userName = Auth.getUserName();
+  this.games = []; //таблица результатов
+
 
   this.getReportGames = function (params) {
-    this.games = []; //таблица результатов
-    this.chartParams = {
-      labels: [],
-      data:[[], [], []],
-      options: {}
-    };
-
-    const userGames = $http.get('reports/topGame',{params: params}).then(report => {
-      this.games = report.data; //таблица результатов
-
-      let params = getChartParams(this.games);
-      this.chartParams.labels= params.labels;
-      this.chartParams.data[2] = params.data; // параметры графика по текущим условиям
-      return params;
+    return $http.get('reports/topGame',{params: params}).then(report => {
+      let games = report.data; //таблица результатов
+      this.games = games;
+  //    console.log('games', games);
+      return games;
    })
+  }
+
+  this.getReportAllGames = function () {
+    return $http.get('reports/topGame').then(report => {
+      let allGames = report.data;
+//      console.log('allGames', allGames);
+      return allGames;
+     })
+  }
+
+  this.refreshReport = function (params){
+    console.log(params.users);
+
+    // this.getReportGames(params).then(userGames => {
+    //   return this.getReportAllGames().then(allGames => {
+    //     this.games = userGames;
+    //     console.log('GAMES', this.games.length)
+    //
+    //     const chartUserGames = makeChartParams(userGames);
+    //     const chartAllGames = makeChartParams(allGames);
+    //
+    //     console.log(chartAllGames.data, chartUserGames.data);
+    //
+    //     this.chartParams = {
+    //       labels: chartAllGames.labels,
+    //       data: [chartAllGames.data, [], chartUserGames.data]
+    //     }
+    //   })
+    // })
+
+    $q.all([this.getReportAllGames(), this.getReportGames(params)]).then(result => {
 
 
-   const allGames = $http.get('reports/topGame').then(report => {
-     let allGames = report.data;
+      this.chartParams = makeChartParams2(...result);
 
-     let params = getChartParams(allGames);
-     this.chartParams.data[0] = params.data.map(el => (el > 5 && el < 10) ? +el +5: +el +15); // параметры графика по текущим условиям
+      console.log(this.chartParams);
 
-     return params;
-   })
-   console.log(userGames);
-   console.log(allGames);
+    }).catch(err => {
+      console.log(err);
+    })
+  }
 
-   Promise.all(userGames, allGames).then(result => {})
-
-
-
-
-
-
-}
-
-
-  this.getReportGames ();
-
-
+this.refreshReport({users: ""});
 
 
   this.getUsers = function() {
@@ -59,6 +66,7 @@ function ReportsGamesController($http, Auth /*, $state*/, $scope) {
       this.usersList=users.data;
     })
   }
+
   this.getUsers();
 
 
@@ -86,15 +94,66 @@ function ReportsGamesController($http, Auth /*, $state*/, $scope) {
  };
 }
 
-function getChartParams(data) {
-  let chart = {
-    labels:[],
-    data: []
-  }
 
- data.forEach(game => {
-   chart.labels.push(game.name);
-   chart.data.push(game.count);
- })
- return chart;
+
+// function makeChartParams(etalon, second) {
+// //etalon  задает label
+//   let index = 0;
+//   let labels = []
+//   let data1 = [];
+//   let data2 = [];
+//
+//   for (var i = 0; i < etalon.length; i++) {
+//     let el1 = etalon[i];
+//     labels.push(el1.name);
+//     data1.push(el1.count);
+//
+//     let el2 = {};
+//
+//     for (var j = 0; j < second.length; j++) {
+//       if (second[j].name == el1.name ) el2 = second[j];
+//     }
+//
+//     data2.push(el2.count || 0);
+//   }
+//
+//     console.log('data1,data2');
+//     console.log(labels, data1, data2);
+//
+//
+//  return {
+//    labels: labels,
+//    data: [data1, [], data2]
+//  }
+// }
+
+function makeChartParams2(fullList, userList, key = "count") {
+  const fullData = [];
+  const userData = [];
+
+  fullList.forEach(game => {
+    const userGame = userList.filter(item => item.name == game.name)[0];
+
+    fullData.push(game[key]);
+    userData.push(userGame && userGame[key] || 0);
+  });
+
+ return {
+   labels: fullList.map(game => game.name),
+   data: [fullData, [], userData]
+ }
 }
+
+//
+// function getChart(data) {
+//   let chart = {
+//     labels:[],
+//     data: []
+//   }
+//
+//  data.forEach(game => {
+//    chart.labels.push(game.name);
+//    chart.data.push(game.count);
+//  })
+//  return chart;
+// }
