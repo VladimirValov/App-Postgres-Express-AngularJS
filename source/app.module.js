@@ -4,5 +4,6 @@ angular.module('gameApp', [
   'ui.router',
   'ui.bootstrap',
   'ngAnimate',
-  'ngSanitize'
+  'ngSanitize',
+  'chart.js'
 ]);

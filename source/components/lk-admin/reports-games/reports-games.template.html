@@ -25,7 +25,7 @@
 
       <div class=" flex-item">
         <label>По игрокам</label>
-        <select class="form-control" ng-model="paramsReport.users" name="users" size=1 multiple>
+        <select class="form-control" ng-model="paramsReport.users" name="users" ng-change="$ctrl.getReportGames(paramsReport)">
           <option ng-repeat="user in $ctrl.usersList" label="{{user.name}}"  value="{{user.id}}"></option>
           <!-- ng-options="user.name for user in $ctrl.usersList track by user.id"  -->
         </select>
@@ -51,8 +51,8 @@
     </div>
 
 
-      <button type="submit" class="btn btn-primary flex-item" ng-click="$ctrl.getReport(paramsReport)">Применить</button>
       <button type="submit" class="btn btn-default flex-item" ng-click="paramsReport = {}">Очистить</button>
+      <button type="submit" class="btn btn-primary flex-item" ng-click="$ctrl.getReportGames(paramsReport)">Применить</button>
 
     </form>
   </div>
@@ -69,17 +69,22 @@
           <td>AVG Score</td>
         </tr>
 
-        <tr ng-repeat="report in $ctrl.reportGames" >
+        <tr ng-repeat="game in $ctrl.games" >
           <td>{{$index +1}}</td>
-          <td>{{report.name}}</td>
-          <td>{{report.count}}</td>
-          <td>{{report.avgscore}}</td>
+          <td>{{game.name}}</td>
+          <td>{{game.count}}</td>
+          <td>{{game.avgscore}}</td>
         </tr>
       </tbody>
     </table>
   </div>
   <div class="col-sm-6">
-    <img src="https://alejandroxpolo.files.wordpress.com/2015/01/infografia_lapareja.jpg" alt="">
+    <!-- <chart-radar></chart-radar> -->
+    <!-- <img src="https://alejandroxpolo.files.wordpress.com/2015/01/infografia_lapareja.jpg" alt=""> -->
+    <canvas id="radar" class="chart chart-radar"
+      chart-data="$ctrl.chartParams.data" chart-options="$ctrl.chartParams.options" chart-labels="$ctrl.chartParams.labels">
+    </canvas>
+
   </div>
 </div>
 

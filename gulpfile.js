@@ -76,7 +76,9 @@ gulp.task('lib', function() {
     'source/bower_components/angular-bootstrap/ui-bootstrap.js',
     'source/bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
     'source/bower_components/angular-animate/angular-animate.js',
-    'source/bower_components/angular-sanitize/angular-sanitize.js'
+    'source/bower_components/angular-sanitize/angular-sanitize.js',
+    'source/bower_components/chart.js/dist/Chart.js',
+    'source/bower_components/angular-chart.js/dist/angular-chart.js'
   ])
   .pipe(newer('public/lib')) //Только обновленные файлы
   .pipe(debug({title: 'src'}))
