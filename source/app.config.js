@@ -18,6 +18,12 @@ angular.module('gameApp').config(function($stateProvider) {
     url: '/reports-games',
     component: 'reportsGames'
   }
+  const reportsUsersState = {
+    name: 'lk-admin.reports-users',
+    url: '/reports-users',
+    component: 'reportsUsers'
+  }
+
   const gameListState = {
     name: 'lk-admin.game-list',
     url: '/game-list',
@@ -40,9 +46,12 @@ angular.module('gameApp').config(function($stateProvider) {
 
 
   $stateProvider.state(loginState);
+
   $stateProvider.state(lkAdminState);
   $stateProvider.state(reportsGamesState);
+  $stateProvider.state(reportsUsersState );
   $stateProvider.state(gameListState);
+  
   $stateProvider.state(lkUserState);
   $stateProvider.state(logoutState);
 });

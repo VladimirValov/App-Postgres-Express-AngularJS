@@ -58,7 +58,9 @@ a + a {
 
 .flex-item {
   display: flex;
-  width: 250px;
+  width: 100%;
+  min-width: 175px;
+  max-width: 320px;
   flex-wrap: nowrap ;
   align-items: baseline;
   margin-bottom: 10px;
@@ -67,6 +69,13 @@ a + a {
 .flex-item label {
   min-width: 100px;
 }
+
+@media(min-width:800px) {
+  .flex-item + .flex-item {
+    margin-left: 20px;
+  }
+}
+
 
 .flex-item-1 {
   flex-grow: 2;

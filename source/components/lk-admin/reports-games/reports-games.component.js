@@ -31,14 +31,14 @@ function ReportsGamesController($http, $q, Auth /*, $state*/, $scope) {
 
     if (!params.users) {
           console.log("111111");
-      return this.getReportAllGames().then(result => {
+      return this.getReportGames().then(result => {
         this.chartParams = makeChartParamsForOne(result);
       })
     }
 
 
     $q.all([this.getReportAllGames(), this.getReportGames(params)]).then(result => {
-      this.chartParams = makeChartParams2(...result);
+      this.chartParams = makeChartParamsForTwo(...result);
     }).catch(err => {
       console.log(err);
     })
@@ -82,7 +82,7 @@ this.refreshReport({users: ""});
 
 
 
-function makeChartParams2(fullList, userList, key = "count") {
+function makeChartParamsForTwo(fullList, userList, key = "count") {
   const fullData = [];
   const userData = [];
 
