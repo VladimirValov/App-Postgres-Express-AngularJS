@@ -51,7 +51,7 @@ angular.module('gameApp').config(function($stateProvider) {
   $stateProvider.state(reportsGamesState);
   $stateProvider.state(reportsUsersState );
   $stateProvider.state(gameListState);
-  
+
   $stateProvider.state(lkUserState);
   $stateProvider.state(logoutState);
 });

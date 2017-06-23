@@ -27,11 +27,9 @@ function ReportsGamesController($http, $q, Auth /*, $state*/, $scope) {
   }
 
   this.refreshReport = function (params){
-    console.log(params.users);
-
+    
     if (!params.users) {
-          console.log("111111");
-      return this.getReportGames().then(result => {
+      return this.getReportGames(params).then(result => {
         this.chartParams = makeChartParamsForOne(result);
       })
     }

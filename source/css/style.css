@@ -86,3 +86,8 @@ a + a {
 img {
   width: 100%;
 }
+
+.chart-container {
+padding: 10px !important;
+text-align: center;
+}

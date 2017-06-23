@@ -1,0 +1,111 @@
+<div class="row">
+  <div class="col-sm-12">
+    <h3>Результаты игроков</h3>
+    <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+      <form name="form-params" novalidate class="flex-container">
+
+        <!-- <div ng-show="paramsReport" class="form-group col-xs-12">
+          <p class="bg-warning text-center">{{paramsReport}}</p>
+        </div> -->
+
+        <div class="flex-item">
+          <label class="">Топ</label>
+          <input type="text" ng-change="$ctrl.refreshReport(paramsReport)" ng-model="paramsReport.limit" name="limit" class="form-control" placeholder="∞" >
+        </div>
+
+
+        <div class=" flex-item">
+          <label>Игроки</label>
+          <select class="form-control" ng-model="paramsReport.users" name="users" ng-change="$ctrl.refreshReport(paramsReport)">
+            <option label="Все"  value=""  default></option>
+            <option ng-repeat="user in $ctrl.usersList" label="{{user.name}}"  value="{{user.id}}"></option>
+          </select>
+        </div>
+
+      </form>
+      <hr>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-6">
+
+    <div ng-show="$ctrl.players.length">
+      <table class="table table-bordered text-center">
+       <tbody>
+         <tr class="active">
+           <td>№</td>
+           <td>Players</td>
+           <td>Count play</td>
+           <td>AVG Score by all games</td>
+         </tr>
+
+         <tr ng-repeat="player in $ctrl.players" >
+           <td>{{$index +1}}</td>
+           <td>{{player.name}}</td>
+           <td>{{player.count}}</td>
+           <td>{{player.avgscore}}</td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+
+
+
+    <div ng-show="$ctrl.games.length">
+      <table class="table table-bordered table-hover text-center">
+       <tbody>
+         <tr class="active">
+           <td>№</td>
+           <td>Games</td>
+           <td>Count play</td>
+           <td>AVG Score</td>
+         </tr>
+
+         <tr ng-repeat="game in $ctrl.games" >
+           <td>{{$index +1}}</td>
+           <td>{{game.name}}</td>
+           <td>{{game.count}}</td>
+           <td>{{game.avgscore}}</td>
+         </tr>
+       </tbody>
+     </table>
+    </div>
+
+
+    </div>
+
+    <div class="col-sm-6">
+      <!-- <chart-radar></chart-radar> -->
+      <!-- <img src="https://alejandroxpolo.files.wordpress.com/2015/01/infografia_lapareja.jpg" alt=""> -->
+
+      <div class="chart-container">
+        <label>Средние очки по играм</label>
+        <canvas id="bar" class="chart chart-bar"
+         chart-series="$ctrl.chartParamsAvg.series" chart-data="$ctrl.chartParamsAvg.data" chart-options="$ctrl.chartParamsAvg.options" chart-labels="$ctrl.chartParamsAvg.labels" >
+       </canvas>
+      </div>
+
+      <div class="chart-container">
+        <label>Количество раз играл</label>
+        <canvas id="bar" class="chart chart-bar" chart-colors="['#FDB45C']" chart-options="$ctrl.chartParamsCount.options"
+         chart-series="$ctrl.chartParamsCount.series" chart-labels="$ctrl.chartParamsCount.labels" chart-data="$ctrl.chartParamsCount.data">
+       </canvas>
+      </div>
+
+    </div>
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-sm-12">
+    <hr>
+    State: Reports Users
+  </div>
+</div>
