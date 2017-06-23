@@ -30,6 +30,14 @@ Object.keys(db).forEach(function(modelName) {
   }
 });
 
+console.log(db);
+
+ db.Game.hasMany(db.Score, { onDelete: 'cascade', hooks: true, foreignKey:'gameId' });
+ // db.Score.belongsTo(db.Game);
+
+console.log(db.Game);
+console.log(db.Score);
+
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
