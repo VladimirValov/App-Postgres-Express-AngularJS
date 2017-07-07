@@ -15,36 +15,6 @@ const gamesRoute = require('./routes/games');
 const scoresRoute = require('./routes/scores');
 const reportsRoute = require('./routes/reports');
 
-/*
-const passport = require('passport');
-const jwt = require('jsonwebtoken');
-
-const JwtStrategy = require('passport-jwt').Strategy;
-const ExtractJwt = require('passport-jwt').ExtractJwt;
-
-
-var jwtOptions = {};
-jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeader();
-jwtOptions.secretOrKey = 'jwtSecret';
-
-var strategy = new JwtStrategy(jwtOptions, function(jwt_payload, next) {
-  console.log('payload received', jwt_payload);
-
-  //
-  // var user = users[_.findIndex(users, {id: jwt_payload.id})];
-  //
-  // if (user) {
-  //   next(null, user);
-  // }
-  // else {
-  //   next(null, false);
-  // }
-
-
-});
-
-//passport.use(strategy);
-*/
 
 const app = express();
 
