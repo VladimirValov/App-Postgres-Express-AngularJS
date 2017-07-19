@@ -13,7 +13,7 @@ API + front Admin panel
 <img src="game-list.png">
 
 # Report 1
-<img src="report-games.png"
+<img src="report-games.png">
 
 # Report 2
 <img src="report-users.png">
