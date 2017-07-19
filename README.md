@@ -1,9 +1,27 @@
- # Задачи:
-* Свои классы ошибок
-* связи индексы
+API + front Admin panel
+
+# Api:
+- Express
+- Sequelize (PostgreSQL)
+
+# Front
+- AngularJS
+- Chart.js
+- Autorization user
+
+# CRUD
+<img src="game-list.png">
+
+# Report 1
+<img src="report-games.png"
+
+# Report 2
+<img src="report-users.png">
 
 # Postgres-Express-Angular
 Admin page for users game statistic
+
+
 
 
 sequelize help:model:create
